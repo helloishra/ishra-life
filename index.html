@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISHRA — Coming Soon | From Mudras to Moonwalk</title>
+<meta name="description" content="ISHRA — a digital platform connecting dancers, learners, instructors, studios and performance opportunities. From Mudras to Moonwalk.">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#fff}
+body{font-family:Arial,Helvetica,sans-serif;display:flex;justify-content:center;align-items:flex-start;overflow-x:hidden}
+.page{position:relative;width:min(100vw,1225px);aspect-ratio:1225/1284;overflow:hidden}
+.artwork{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:contain}
+.notify-form{position:absolute;left:30.5%;top:81.9%;width:38.3%;height:4.05%;display:flex;border-radius:7px;overflow:hidden;background:#fff;box-shadow:0 0 0 1px rgba(90,70,130,.15)}
+.notify-form input{min-width:0;flex:1;border:0;outline:none;padding:0 18px;font-size:clamp(10px,1.15vw,16px);color:#303047;background:#fff}
+.notify-form input::placeholder{color:#7b7b91;opacity:1}
+.notify-form button{width:29%;border:0;cursor:pointer;color:#fff;background:linear-gradient(135deg,#5b20a8,#6e2ab9);font-weight:700;font-size:clamp(10px,1.05vw,15px)}
+@media(max-width:600px){.page{width:100vw}.notify-form input{padding:0 10px}}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+</style>
+</head>
+<body>
+<main class="page" aria-label="ISHRA Coming Soon">
+<img class="artwork" src="ishra-coming-soon.png" alt="ISHRA — From Mudras to Moonwalk. Coming Soon. A Bigger Stage for Every Dancer.">
+<form class="notify-form" action="https://formspree.io/f/mrpgywln" method="POST">
+<label class="sr-only" for="email">Email address</label>
+<input id="email" name="email" type="email" autocomplete="email" placeholder="Enter your email address" required>
+<input type="hidden" name="source" value="ISHRA Coming Soon Page">
+<input type="hidden" name="_subject" value="New ISHRA Coming Soon Subscriber">
+<button type="submit">Notify Me</button>
+</form>
+</main>
+</body>
+</html>
