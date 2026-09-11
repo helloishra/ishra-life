@@ -57,6 +57,10 @@
       border-radius: 4px;
       font-size: 15px;
     }
+    input:focus {
+      outline: none;
+      border-color: #ff0055;
+    }
     button {
       width: 100%;
       padding: 14px;
@@ -70,16 +74,6 @@
       text-transform: uppercase;
       cursor: pointer;
     }
-    button:disabled {
-      background: #666;
-      cursor: not-allowed;
-    }
-    #status-msg {
-      margin-top: 14px;
-      font-weight: bold;
-      font-size: 14px;
-      text-align: center;
-    }
   </style>
 </head>
 <body>
@@ -88,8 +82,8 @@
     <h1>Are You a Dance Lover?</h1>
     <p>Drop your contact details below to claim your free workshop passes and session invites.</p>
 
-    <!-- REPLACE 'https://formspree.io/f/mrpgddeo' WITH YOUR ACTUAL FORMSPREE ENDPOINT (e.g. mqkvojbw) -->
-    <form id="lead-form">
+    <!-- Native submission directly to Formspree -->
+    <form id="dance-lead-form" action="https://formspree.io/f/https://formspree.io/f/mrpgddeo" method="POST">
       <input type="hidden" name="promoter_id" id="promoter_id" value="DIRECT" />
       <input type="hidden" name="campaign_source" id="campaign_source" value="car_sticker" />
 
@@ -99,70 +93,18 @@
       <label for="email">Email Address</label>
       <input type="email" name="email" id="email" placeholder="you@example.com" />
 
-      <button type="submit" id="submit-btn">Claim Free Pass</button>
+      <button type="submit">Claim Free Pass</button>
     </form>
-
-    <div id="status-msg"></div>
   </div>
 
   <script>
-    // 1. Read URL referral tags
-    window.addEventListener("DOMContentLoaded", () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const ref = urlParams.get("ref");
-      const utm = urlParams.get("utm_source");
+    // Injects referral parameters immediately into hidden fields
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get('ref');
+    const source = params.get('utm_source');
 
-      if (ref) document.getElementById("promoter_id").value = ref;
-      if (utm) document.getElementById("campaign_source").value = utm;
-    });
-
-    // 2. Safe AJAX POST submission
-    const form = document.getElementById("lead-form");
-    const statusMsg = document.getElementById("status-msg");
-    const submitBtn = document.getElementById("submit-btn");
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Sending...";
-      statusMsg.textContent = "";
-
-      // INSERT YOUR FORMSPREE ID HERE:
-      const formspreeEndpoint = "https://formspree.io/f/https://formspree.io/f/mrpgddeo";
-
-      const data = {
-        promoter_id: document.getElementById("promoter_id").value,
-        campaign_source: document.getElementById("campaign_source").value,
-        phone: document.getElementById("phone").value,
-        email: document.getElementById("email").value
-      };
-
-      try {
-        const response = await fetch(formspreeEndpoint, {
-          method: "POST",
-          headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(data)
-        });
-
-        if (response.ok) {
-          statusMsg.style.color = "green";
-          statusMsg.textContent = "Pass claimed! We will contact you shortly.";
-          form.reset();
-        } else {
-          statusMsg.style.color = "red";
-          statusMsg.textContent = "Submission failed. Please check your Formspree ID.";
-        }
-      } catch (error) {
-        statusMsg.style.color = "red";
-        statusMsg.textContent = "Network error. Please try again.";
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Claim Free Pass";
-      }
-    });
+    if (ref) document.getElementById('promoter_id').value = ref;
+    if (source) document.getElementById('campaign_source').value = source;
   </script>
 </body>
 </html>
