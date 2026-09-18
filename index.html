@@ -45,12 +45,12 @@ src="https://www.facebook.com/tr?id=1966165568121600&ev=PageView&noscript=1"
       <section class="hero"><p class="eyebrow">India’s curated dance marketplace</p><h1>Your dance world,<br>in one place.</h1><h2>Coming soon to a city near you</h2><p class="hero-copy">Discover dance schools, independent artists and studios — from classical traditions to contemporary movement. ISHRA makes it easier to find your people and your next move.</p><div class="actions"><a class="button primary" href="#early-access">Get early access</a><a class="button secondary" href="#what-is-ishra">Explore ISHRA</a></div></section>
       <section class="features" id="what-is-ishra" aria-label="What ISHRA offers"><article class="feature"><div class="icon">✦</div><h3>Find your style</h3><p>Discover dance classes, artists and spaces made for you.</p></article><article class="feature"><div class="icon">◎</div><h3>Meet your people</h3><p>Connect with trusted teachers, dancers and communities.</p></article><article class="feature"><div class="icon">⌁</div><h3>Book with ease</h3><p>Plan classes, workshops and studio time in one place.</p></article><article class="feature"><div class="icon">↗</div><h3>Grow your practice</h3><p>Build your craft, visibility and dance community.</p></article></section>
       <section class="waitlist" id="early-access"><p class="eyebrow">Be among the first</p><h2>Get ISHRA early access</h2><p class="waitlist-intro">Tell us where you are and what brings you to dance. We’ll let you know when ISHRA is ready for your city.</p>
-        <form id="waitlist-form" action="https://formspree.io/f/mrpgywln" method="POST" accept-charset="UTF-8" target="formspree-submit" onsubmit=onsubmit="if(typeof fbq==='function'){fbq('track','Lead');}this.style.display='none';document.getElementById('success').classList.add('show');">
+        <form id="waitlist-form" action="https://formspree.io/f/mrpgywln" method="POST" accept-charset="UTF-8" target="formspree-submit">
           <div class="grid"><div class="field"><label for="name">Name</label><input id="name" name="name" autocomplete="name" placeholder="Your full name" required></div><div class="field"><label for="city">City</label><input id="city" name="city" autocomplete="address-level2" placeholder="e.g. Bengaluru" required></div></div>
           <div class="grid"><div class="field"><label for="phone">Phone number</label><input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+91 98765 43210" required></div><div class="field"><label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required></div></div>
           <div class="grid"><div class="field"><label for="role">I am joining ISHRA as</label><select id="role" name="interest_type" required><option value="" selected disabled>Select one</option><option>Dance learner</option><option>Independent artist or instructor</option><option>Dance school</option><option>Dance studio</option><option>Dance community or event organiser</option></select></div><div class="field"><label for="style">Dance style of interest</label><select id="style" name="dance_style" required><option value="" selected disabled>Select a style</option><option>Bharatanatyam</option><option>Kathak</option><option>Kuchipudi</option><option>Odissi</option><option>Mohiniyattam</option><option>Bollywood</option><option>Contemporary</option><option>Hip-Hop / Street</option><option>Other</option></select></div></div>
           <input type="hidden" name="source" value="ISHRA Early Access Landing Page"><input type="hidden" name="_subject" value="New ISHRA early-access request"><input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true"><label class="consent"><input type="checkbox" name="marketing_consent" value="yes" required><span>I agree that ISHRA may use these details to contact me about early access and launch updates. I can unsubscribe at any time.</span></label><button class="submit" type="submit">Join the early-access list</button><p class="note">Your details stay with ISHRA. No spam — only relevant launch updates.</p>
-        </form><iframe name="formspree-submit" id="formspree-submit" title="Form submission" hidden></iframe></iframe><div class="success" id="success" aria-live="polite"><h3>You’re on the early-access list.</h3><p>Thank you for joining ISHRA. We’ll be in touch when your city is ready.</p></div>
+        </form><iframe name="formspree-submit" id="formspree-submit" title="Form submission" hidden></iframe><div class="success" id="success" aria-live="polite"><h3>You’re on the early-access list.</h3><p>Thank you for joining ISHRA. We’ll be in touch when your city is ready.</p></div>
       </section>
     </main>
     <footer><div class="footer-name">www.ishra.life</div><div class="footer-mid">From Mudras to Moonwalk</div><div class="footer-note">A home for every movement.</div></footer>
@@ -58,16 +58,34 @@ src="https://www.facebook.com/tr?id=1966165568121600&ev=PageView&noscript=1"
   <script>
   const form = document.getElementById('waitlist-form');
   const formspreeFrame = document.getElementById('formspree-submit');
+  const submitBtn = form.querySelector('.submit');
   let formSubmitted = false;
+  let alreadySubmitted = false;
 
-  form.addEventListener('submit', function () {
+  form.addEventListener('submit', function (e) {
+    if (alreadySubmitted) {
+      // Blocks any second attempt outright, even via pressing Enter
+      e.preventDefault();
+      return;
+    }
+    alreadySubmitted = true;
     formSubmitted = true;
+
+    // Lock the button the instant it's clicked, before Formspree even responds
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting…';
   });
 
   formspreeFrame.addEventListener('load', function () {
     if (formSubmitted) {
-      fbq('track', 'Lead');
+      if (typeof fbq === 'function') {
+        fbq('track', 'Lead');
+      }
       formSubmitted = false;
+
+      // Only now — once Formspree has actually responded — show the confirmation
+      form.style.display = 'none';
+      document.getElementById('success').classList.add('show');
     }
   });
 </script>
