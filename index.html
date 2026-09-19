@@ -86,9 +86,11 @@ src="https://www.facebook.com/tr?id=1966165568121600&ev=PageView&noscript=1"
 // Formspree has responded - lock and hide the completed form
 submitBtn.textContent = 'Submitted ✓';
 submitBtn.disabled = true;
-form.hidden = true;
 form.style.setProperty('display', 'none', 'important');
-document.getElementById('success').classList.add('show');
+
+const successMessage = document.getElementById('success');
+successMessage.classList.add('show');
+successMessage.style.setProperty('display', 'block', 'important');
     }
   });
 </script>
