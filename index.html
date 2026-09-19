@@ -77,12 +77,26 @@ src="https://www.facebook.com/tr?id=1966165568121600&ev=PageView&noscript=1"
   });
 
   formspreeFrame.addEventListener('load', function () {
-    if (formSubmitted) {
-      if (typeof fbq === 'function') {
-        fbq('track', 'Lead');
-      }
-      formSubmitted = false;
+  if (formSubmitted) {
+    if (typeof fbq === 'function') {
+      fbq('track', 'Lead');
+    }
 
+    formSubmitted = false;
+
+    form.reset();
+    form.style.display = 'none';
+
+    const successMessage = document.getElementById('success');
+    successMessage.style.display = 'block';
+    successMessage.classList.add('show');
+
+    window.scrollTo({
+      top: document.getElementById('early-access').offsetTop,
+      behavior: 'smooth'
+    });
+  }
+});
 // Formspree has responded - lock and hide the completed form
 submitBtn.textContent = 'Submitted ✓';
 submitBtn.disabled = true;
